@@ -1,0 +1,11 @@
+{
+  "appSettings": {
+    "endpoints": {
+      "baseURI": "SYNAPSE_DYNAMIC_URI",    
+      "getQuestionnaireResponse": "SYNAPSE_DYNAMIC_URI/GetListByAttribute/local/pkb_questionnaireresponse/person_id/"
+    },
+    "enableLogging": true,
+    "isProdBuild": true,
+    "enableRBAC": false
+  }
+}

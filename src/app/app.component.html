@@ -1,0 +1,99 @@
+<!--BEGIN LICENSE BLOCK--> 
+<!--Interneuron Terminus
+
+Copyright(C) 2025  Interneuron Limited
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>. -->
+<!--END LICENSE BLOCK--> 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col mt-3 mb-3">
+            <h3 *ngIf="!showQuestionnaireResponse">PKB Questionnaires</h3>
+            <h3 *ngIf="showQuestionnaireResponse">Questionnaire Response</h3>
+        </div>
+    </div>
+    <div class="row" *ngIf="!showQuestionnaireResponse">
+        <div class="col">
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Authored</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="!isLoading">
+                    <tr *ngFor="let questionnaireResponse of questionnareResponses">
+                        <td>{{ questionnaireResponse.response.resource.questionnaire.display }}</td>
+                        <td>{{ questionnaireResponse.response.resource.authored | date: 'dd/MM/yyyy HH:mm' }}</td>
+                        <td>{{ questionnaireResponse.response.resource.status }}</td>
+                        <td><a href="#" (click)="onViewQuestionnaireResponse(questionnaireResponse.response)">View Response</a></td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="isLoading">
+                    <tr>
+                        <td colspan="4">
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-grow spinner-grow-sm" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <div class="spinner-grow spinner-grow-sm" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <div class="spinner-grow spinner-grow-sm" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td colspan="4" *ngIf="!isLoading && questionnareResponses.length == 0">
+                            <div class="d-flex justify-content-center">No data available</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" *ngIf="showQuestionnaireResponse">
+        <div class="col">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Response</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let question of selectedQuestionnaireResponse.resource.item">
+                        <td class="col-8">{{ question.text }}</td>
+                        <td class="col-4">{{ question.answer ? question.answer[0].valueString : "" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" *ngIf="showQuestionnaireResponse">
+        <div class="col">
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-secondary" (click)="onBackClicked()">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
